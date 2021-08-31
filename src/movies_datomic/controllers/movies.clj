@@ -1,6 +1,6 @@
 (ns movies-datomic.controllers.movies
   (:require [movies-datomic.datomic.movies :as datomic.movies]
-            [movies-datomic.datomic.config :as config]
+            [movies-datomic.datomic.dev-config :as config]
             [datomic.client.api :as d]
             [movies-datomic.datomic.movies-data :as data]))
 

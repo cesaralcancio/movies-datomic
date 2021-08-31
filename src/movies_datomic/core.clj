@@ -1,7 +1,4 @@
-(ns movies-datomic.core)
+(ns movies-datomic.core
+  (:require [movies-datomic.ports.cli :as cli]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
-
+(defn -main [] (cli/run-app!))
