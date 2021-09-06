@@ -1,8 +1,18 @@
 (ns movies-datomic.datomic.movies
   (:require [datomic.client.api :as d]))
 
-(defn create-one!
-  "Create a new movie"
+(defn upsert-one!
+  "Update or insert one record"
+  [conn {:keys [id title genre release-year created-at]}]
+  (-> (d/transact conn {:tx-data [[:db/add "temporary-new-db-id" :movie/id id]
+                                  [:db/add "temporary-new-db-id" :movie/title title]
+                                  [:db/add "temporary-new-db-id" :movie/genre genre]
+                                  [:db/add "temporary-new-db-id" :movie/release-year release-year]
+                                  [:db/add "temporary-new-db-id" :movie/created-at created-at]]})
+      :tx-data))
+
+(defn upsert-one-map!
+  "Upsert or insert one record using map"
   [conn {:keys [id title genre release-year created-at]}]
   (-> (d/transact conn {:tx-data [{:movie/id           id
                                    :movie/title        title
@@ -11,12 +21,12 @@
                                    :movie/created-at   created-at}]})
       :tx-data))
 
-(defn create-many!
-  "Create a list of movie"
+(defn upsert-many!
+  "Update or insert "
   [conn movies]
   (-> (d/transact conn {:tx-data movies}) :tx-data))
 
-(defn delete!
+(defn retract-one!
   "Retract all the fields based on the :movie/id"
   [conn id]
   (try
