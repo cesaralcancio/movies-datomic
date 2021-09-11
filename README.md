@@ -1,10 +1,10 @@
 # movies-datomic
 
-A Clojure library designed to ... well, that part is up to you.
+Exemplo de operaçoes simples utilizando o datomic dev local library.
 
 ## Usage
 
-FIXME
+Para preparar o ambiente acessar o [Artigo no Mediu](https://medium.com/@cesar-alcancio/primeiros-passos-utilizando-datomic-b9c5252731d).
 
 ## License
 
