@@ -8,12 +8,6 @@
 
 (d/create-database client {:db-name "movies"})
 
-(defn delete-database []
-  (d/delete-database client {:db-name "movies"}))
-
-(defn list-databases []
-  (d/list-databases client {}))
-
 (def conn (d/connect client {:db-name "movies"}))
 
 (def movie-schema
@@ -40,3 +34,9 @@
     :db/doc         "Instant the record is created"}])
 
 (d/transact conn {:tx-data movie-schema})
+
+(defn delete-database []
+  (d/delete-database client {:db-name "movies"}))
+
+(defn list-databases []
+  (d/list-databases client {}))
