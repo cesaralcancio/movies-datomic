@@ -40,3 +40,5 @@
 
 (defn list-databases []
   (d/list-databases client {}))
+
+; (delete-database)

@@ -4,40 +4,37 @@
 (defn upsert-one!
   "Update or insert one record"
   [conn {:keys [id title genre release-year created-at]}]
-  (-> (d/transact conn {:tx-data [[:db/add "temporary-new-db-id" :movie/id id]
-                                  [:db/add "temporary-new-db-id" :movie/title title]
-                                  [:db/add "temporary-new-db-id" :movie/genre genre]
-                                  [:db/add "temporary-new-db-id" :movie/release-year release-year]
-                                  [:db/add "temporary-new-db-id" :movie/created-at created-at]]})
-      :tx-data))
+  (d/transact conn {:tx-data [[:db/add "temporary-new-db-id" :movie/id id]
+                              [:db/add "temporary-new-db-id" :movie/title title]
+                              [:db/add "temporary-new-db-id" :movie/genre genre]
+                              [:db/add "temporary-new-db-id" :movie/release-year release-year]
+                              [:db/add "temporary-new-db-id" :movie/created-at created-at]]}))
 
 (defn upsert-one-map!
   "Upsert or insert one record using map"
   [conn {:keys [id title genre release-year created-at]}]
-  (-> (d/transact conn {:tx-data [{:movie/id           id
-                                   :movie/title        title
-                                   :movie/genre        genre
-                                   :movie/release-year release-year
-                                   :movie/created-at   created-at}]})
-      :tx-data))
+  (d/transact conn {:tx-data [{:movie/id           id
+                               :movie/title        title
+                               :movie/genre        genre
+                               :movie/release-year release-year
+                               :movie/created-at   created-at}]}))
 
 (defn upsert-many!
   "Update or insert "
   [conn movies]
-  (-> (d/transact conn {:tx-data movies}) :tx-data))
+  (d/transact conn {:tx-data movies}))
 
 (defn retract-one!
   "Retract all the fields based on the :movie/id"
   [conn id]
   (try
-    (-> (d/transact conn {:tx-data
-                          [[:db/retract [:movie/id id] :movie/id]
-                           [:db/retract [:movie/id id] :movie/title]
-                           [:db/retract [:movie/id id] :movie/genre]
-                           [:db/retract [:movie/id id] :movie/release-year]
-                           [:db/retract [:movie/id id] :movie/created-at]]})
-        :tx-data)
-    (catch Exception e nil)))
+    (d/transact conn {:tx-data
+                      [[:db/retract [:movie/id id] :movie/id]
+                       [:db/retract [:movie/id id] :movie/title]
+                       [:db/retract [:movie/id id] :movie/genre]
+                       [:db/retract [:movie/id id] :movie/release-year]
+                       [:db/retract [:movie/id id] :movie/created-at]]})
+    (catch Exception e {})))
 
 (defn find-all!
   [db]
